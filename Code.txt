@@ -1,0 +1,86 @@
+-- create database exercise_01
+
+create table Customer
+(
+	c_id int primary key not null identity,
+	c_name nvarchar(50),
+	c_email nvarchar(100),
+	c_address nvarchar(100)
+)
+
+create table Book
+(
+	c_id int foreign key references Customer(c_id),
+	Book_id int primary key not null,
+	b_isbn int,
+	Book_Title nvarchar(100),
+	Book_Author nvarchar(100),
+	Book_Genre nvarchar(100),
+	Book_Price decimal(10,2)
+)
+
+create table Ebook
+(
+	Ebook_id int primary key not null,
+	Ebook_isbn int,
+	Ebook_Title nvarchar(100),
+	Ebook_Author nvarchar(100),
+	Ebook_Genre nvarchar(100),
+	Ebook_Price decimal(10,2),
+	c_id int foreign key references Cart(c_id),
+	o_id int foreign key references Orders(o_id)
+)
+
+create table AudioBook
+(
+	c_id int foreign key references Customer(c_id),
+	Abook_isbn int,
+	Abook_id int primary key not null,
+	Abook_Title nvarchar(100),
+	Abook_Author nvarchar(100),
+	Abook_Narrator nvarchar(50),
+	Abook_Genre nvarchar(100),
+	Abook_Price decimal(10,2),
+	c_id int foreign key references Cart(c_id),
+	o_id int foreign key references Orders(o_id)
+)
+
+create table Cart
+(
+	cart_id int primary key not null references Customer(c_id),
+	cart_time date
+)
+
+---alter table Cart
+---	add cart_id int primary key not null references Customer(c_id)
+
+
+
+create table Orders
+(
+	o_id int primary key not null,
+	o_date date,
+	o_totalAm decimal(10, 2),
+	o_shipAdd nvarchar(100),
+	c_id int foreign key references Customer(c_id)
+)
+
+
+create table Review
+(
+	Rev_id int primary key not null,
+	Rev_Rating int,
+	Rev_Comment nvarchar(100),
+	Rev_Date date,
+	c_id int foreign key references Customer(c_id),
+	Book_id int foreign key references Book(Book_id),
+	Ebook_id int foreign key references Ebook(Ebook_id)
+)
+
+
+
+
+
+
+
+
